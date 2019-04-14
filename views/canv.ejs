@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Drawing Board</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    canvas {
+      height: 100%;
+      width: 100%;
+      background: black;
+    }
+
+    #clear {
+      position: absolute;
+      /* z-index: 222; */
+    }
+
+    #erase {
+      position: absolute;
+      left: 5.5rem;
+    }
+
+    .btn-selected {
+      position: absolute;
+      left: 5.5rem;
+      opacity: 0.7;
+    }
+
+    #mouseColor {
+      position: absolute;
+      left: 11.2rem;
+    }
+
+    .font-size-select {
+      position: absolute;
+      left: 15.5rem;
+    }
+
+    .bg-color {
+      position: absolute;
+      left: 19.5rem;
+    }
+
+    #light {
+      position: absolute;
+      left: 19.4rem;
+    }
+
+    #dark {
+      position: absolute;
+      left: 24.9rem;
+    }
+
+    #linktoimg {
+      position: absolute;
+      background: whitesmoke;
+      padding: 7px 4px 0 4px;
+      height: 30px;
+      color: black;
+      left: 29.9rem;
+      text-decoration: none;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+
+<body>
+  <button id="clear">Clear</button> <button id="erase">erase</button>
+  <input type="color" id="mouseColor" />
+  <select class="font-size-select" id="select-size">
+    <option selected value="10">10</option>
+    <option value="15">15</option>
+    <option value="20">20</option>
+    <option value="25">25</option>
+  </select>
+  <button id="dark" data-color="black">Dark</button>
+  <button id="light" data-color="White">Light</button>
+  <a id="linktoimg" href="" download>download</a>
+
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="canvas.js"></script>
+
+</body>
+
+</html>
