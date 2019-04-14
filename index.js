@@ -18,13 +18,14 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.get("/", function (req, res) {
-  res.render("canv.ejs");
+  // res.render("canv.ejs");
+  res.render("home");
 });
 
 
 app.get("/:id", function (req, res) {
   // console.log(req.params.id);
-  return res.render("canv.ejs");
+  return res.render("canv");
 });
 
 
@@ -32,7 +33,7 @@ app.get("/:id", function (req, res) {
 io.on('connection', function (socket) {
   // io.to(room).emit('hi', "me");
   socket.on("room", function (room) {
-    console.log("data:", room);
+    // console.log("data:", room);
     socket.join(room);
   });
 
