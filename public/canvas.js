@@ -1,7 +1,6 @@
-// this within a static method refers to the Board class
-// (constructor function) itself (if you call it via
-// Board.methodName(...)) this will refer to class.
-var socket = io();
+const socket = io();
+const room = window.location.pathname;
+socket.emit('room', room);
 
 class Board {
   static initalize() {
@@ -25,11 +24,6 @@ class Board {
     this.takeScreenShot = this.takeScreenShot.bind(this);
   }
 
-  /*
-	Todo: bug fixes
-	pictures not showing when background is white
-	*/
-
   static draw({ x, y }) {
     if (this.erase) this.color = this.eraseColor;
     else this.color = this.prevColor;
@@ -39,7 +33,6 @@ class Board {
     this.ctx.arc(x, y, this.lineWidth / 2, 0, Math.PI * 2);
     this.ctx.fill();
     this.ctx.closePath();
-    // this.ctx.save();
 
     // If we have prevX/Y draw a line from prevX/Y
     // To currentX/Y
@@ -79,7 +72,7 @@ socket.on("recive-stop", function ({ x, y }) {
 });
 
 function recored({ x, y }) {
-  socket.emit("draw", { x, y });
+  socket.emit("draw", { x, y, room });
 }
 
 Board.canv.addEventListener("mousedown", function () {
@@ -94,7 +87,7 @@ socket.on("draw", function ({ x, y }) {
 
 Board.canv.addEventListener("mouseup", function () {
   // Stop drawing onMouseup
-  socket.emit("stop", { x: null, y: null });
+  socket.emit("stop", { x: null, y: null, room });
   Board.canv.removeEventListener("mousemove", recored);
 });
 
@@ -149,53 +142,3 @@ bgLight.addEventListener("click", function () {
   bgDark.classList.remove("btn-selected");
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-window.onload = function () {
-
-  var socket = io();
-  var form = document.querySelector(".form");
-  var input = document.querySelector("#m");
-  var msg = document.querySelector("#messages");
-  var typing = document.querySelector(".typing");
-  // message submit
-  form.addEventListener("submit", function (e) {
-    socket.emit("chat message", input.value);
-    input.value = "";
-
-    e.preventDefault();
-  });
-
-  // typing
-  input.addEventListener("keypress", function (e) {
-    socket.emit("typing");
-  });
-
-  // listening for messages
-  socket.on("chat message", function (data) {
-    msg.innerHTML += `<li>${data}</li>`;
-    typing.innerHTML = "";
-  });
-
-  // listening for typing
-  socket.on("typing", function (data) {
-    typing.innerHTML = `<li>typing ...</li>`;
-  });
-
-
-
-
-};
