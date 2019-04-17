@@ -16,10 +16,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-
 app.get("/", function (req, res) {
   // res.render("canv.ejs");
-  res.render("home");
+  return res.render("home");
 });
 
 
@@ -31,9 +30,8 @@ app.get("/:id", function (req, res) {
 
 
 io.on('connection', function (socket) {
-  // io.to(room).emit('hi', "me");
   socket.on("room", function (room) {
-    // console.log("data:", room);
+    // console.log("room:", room);
     socket.join(room);
   });
 
@@ -61,8 +59,8 @@ io.on('connection', function (socket) {
 //   });
 // });
 
-const PORT = process.env.PORT || 3000
 
+const PORT = process.env.PORT || 3000
 http.listen(PORT, function () {
-  console.log("listening on *:3000");
+  console.log(`listening on: ${PORT}`);
 });
